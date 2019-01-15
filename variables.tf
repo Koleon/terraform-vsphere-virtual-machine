@@ -17,6 +17,11 @@ variable "network" {
   description = "The network to deploy virtual machines to."
 }
 
+variable "tags" {
+  description = "The IDs of any tags to attach to this resource."
+  default     = []
+}
+
 variable "vm_name_prefix" {
   type        = "string"
   description = "The prefix to use for virtual machines created with this module."
@@ -49,11 +54,22 @@ variable "memory" {
 
 variable "folder" {
   description = "The path to the folder to put this virtual machine in, relative to the datacenter that the resource pool is in."
+  default     = ""
 }
 
 variable "disk_size" {
   description = "The amount of disk space to assign to each VM. Leave blank to use the template's disk size (cloned VMs only)."
   default     = ""
+}
+
+variable "thin_provisioned" {
+  description = "If true, this disk is thin provisioned, with space for the file being allocated on an as-needed basis. Cannot be set to true when eagerly_scrub is true."
+  default     = "true"
+}
+
+variable "eagerly_scrub" {
+  description = "If set to true, the disk space is zeroed out on VM creation. This will delay the creation of the disk or virtual machine. Cannot be set to true when thin_provisioned is true."
+  default     = "false"
 }
 
 variable "guest_id" {

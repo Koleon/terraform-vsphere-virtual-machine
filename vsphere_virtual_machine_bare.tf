@@ -8,6 +8,7 @@ resource "vsphere_virtual_machine" "virtual_machine_bare" {
   memory   = "${var.memory}"
   folder   = "${var.folder}"
   guest_id = "${var.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
 
   wait_for_guest_net_timeout = "${var.wait_for_guest_net_timeout}"
 
@@ -19,6 +20,8 @@ resource "vsphere_virtual_machine" "virtual_machine_bare" {
     label = "disk0"
     size  = "${var.disk_size}"
   }
+
+  tags = "${var.tags}"
 }
 
 # vim: filetype=terraform

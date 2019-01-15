@@ -8,6 +8,7 @@ resource "vsphere_virtual_machine" "virtual_machine_linux" {
   memory   = "${var.memory}"
   folder   = "${var.folder}"
   guest_id = "${data.vsphere_virtual_machine.template.guest_id}"
+  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
 
   wait_for_guest_net_timeout = "${var.wait_for_guest_net_timeout}"
 
@@ -18,8 +19,8 @@ resource "vsphere_virtual_machine" "virtual_machine_linux" {
   disk {
     label            = "disk0"
     size             = "${var.disk_size != "" ? var.disk_size : data.vsphere_virtual_machine.template.disks.0.size}"
-    thin_provisioned = "${var.linked_clone == "true" ? data.vsphere_virtual_machine.template.disks.0.thin_provisioned : true}"
-    eagerly_scrub    = "${var.linked_clone == "true" ? data.vsphere_virtual_machine.template.disks.0.eagerly_scrub: false}"
+    thin_provisioned = "${var.linked_clone == "true" ? data.vsphere_virtual_machine.template.disks.0.thin_provisioned : "${var.thin_provisioned}"}"
+    eagerly_scrub    = "${var.linked_clone == "true" ? data.vsphere_virtual_machine.template.disks.0.eagerly_scrub : "${var.eagerly_scrub}"}"
   }
 
   clone {
@@ -43,6 +44,8 @@ resource "vsphere_virtual_machine" "virtual_machine_linux" {
       dns_suffix_list = ["${var.domain_name}"]
     }
   }
+
+  tags = "${var.tags}"
 }
 
 # vim: filetype=terraform
