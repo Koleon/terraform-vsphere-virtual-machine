@@ -52,6 +52,8 @@ Usage Example:
 | disk_size | The amount of disk space to assign to each VM. Leave blank to use the template's disk size (cloned VMs only). | string | `` | no |
 | dns_servers | The DNS servers to assign to each virtual machine. | string | `<list>` | no |
 | domain_name | The domain of the virtual machine. This is added as the domain name on Linux, and to the DNS domain search list on both Linux and Windows. | string | `` | no |
+| eagerly_scrub | If set to true, the disk space is zeroed out on VM creation. This will delay the creation of the disk or virtual machine. Cannot be set to true when thin_provisioned is true.| string | false | no |
+| folder | The path to the folder to put this virtual machine in, relative to the datacenter that the resource pool is in. | string | `` | no |
 | guest_id | The virtual machine type. This only applies to VMs being created from scratch, otherwise it is unused. | string | `` | no |
 | ipv4_address_start | The IP address to start assigning virtual machines at, relative to the network address and mask. Example: for two virtual machines in 10.0.0.0/24, a value of 10 here would give the IP addresses 10.0.0.10 and 10.0.0.11. For 10.0.0.128/25, a value of 10 would give 10.0.0.138 and 10.0.0.139. | string | `1` | no |
 | ipv4_gateway | The default IPv4 gateway for the virtual machines. Leave blank for DHCP. | string | `` | no |
@@ -63,6 +65,7 @@ Usage Example:
 | resource_pool | The resource pool to deploy the virtual machines to. If specifying a the root resource pool of a cluster, enter CLUSTER_NAME/Resources. | string | - | yes |
 | template_name | The template to clone virtual machines from. Leave this blank when creating a virtual machine from scratch. | string | `` | no |
 | template_os_family | The OS family of the supplied template. Should be one of linux or windows. Leave blank to create a virtual machine from scratch. | string | `` | no |
+| thin_provisioned | If true, this disk is thin provisioned, with space for the file being allocated on an as-needed basis. Cannot be set to true when eagerly_scrub is true. | string | true | no |
 | time_zone | The timezone, either in a timezone database format entry or sysprep entry, depending on if Linux or Windows is being deployed. The default is UTC on both family types. | string | `` | no |
 | vm_count | The number of virtual machines to create. | string | `1` | no |
 | vm_name_prefix | The prefix to use for virtual machines created with this module. | string | - | yes |
